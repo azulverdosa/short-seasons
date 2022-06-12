@@ -2,6 +2,7 @@ import React from 'react';
 import { createRoot } from 'react-dom/client';
 
 import SeasonDisplay from './components/SeasonDisplay';
+import LoadingSpinner from './components/LoadingSpinner';
 
 class App extends React.Component {
   state = { lat: null, errorMessage: '' };
@@ -13,7 +14,7 @@ class App extends React.Component {
     );
   }
 
-  render() {
+  renderContent() {
     if (this.state.errorMessage && !this.state.lat) {
       return <div> Error: {this.state.errorMessage} </div>;
     }
@@ -22,7 +23,11 @@ class App extends React.Component {
       return <SeasonDisplay lat={this.state.lat} />;
     }
 
-    return <div>One second while we look for your location...</div>;
+    return <LoadingSpinner message={'Looking for your location...'} />;
+  }
+
+  render() {
+    return <div className={'border red'}>{this.renderContent()}</div>;
   }
 }
 
