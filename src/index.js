@@ -1,14 +1,28 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 
-class App extends React.Component {
-  render() {
-    window.navigator.geolocation.getCurrentPosition(
-      (position) => console.log(position),
-      (err) => console.log(err)
-    );
+import SeasonDisplay from './components/SeasonDisplay';
 
-    return <div>Latitude:</div>;
+class App extends React.Component {
+  state = { lat: null, errorMessage: '' };
+
+  componentDidMount() {
+    window.navigator.geolocation.getCurrentPosition(
+      (position) => this.setState({ lat: position.coords.latitude }),
+      (err) => this.setState({ errorMessage: err.message })
+    );
+  }
+
+  render() {
+    if (this.state.errorMessage && !this.state.lat) {
+      return <div> Error: {this.state.errorMessage} </div>;
+    }
+
+    if (this.state.lat && !this.state.errorMessage) {
+      return <SeasonDisplay lat={this.state.lat} />;
+    }
+
+    return <div>One second while we look for your location...</div>;
   }
 }
 
