@@ -2,6 +2,8 @@ import React from 'react';
 
 import './SeasonDisplay.css';
 
+// deployment link: https://seasons-eight-sable.vercel.app
+
 const seasonConfig = {
   summer: {
     text: 'Time for the beach, bitches!',
